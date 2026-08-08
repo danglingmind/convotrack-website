@@ -1,26 +1,344 @@
 @import "tailwindcss";
 
+/* ============================================================
+   ConvoTrack — web theme
+   Mirrors the iOS app palette (ConvoTrackTheme.swift): dark-only,
+   Material-You inspired, lime-green brand accent.
+   ============================================================ */
+
+@theme {
+  /* Brand */
+  --color-lime: #caf300;
+  --color-lime-dim: #b0d500;
+  --color-on-lime: #171e00;
+  --color-on-lime-variant: #3e4c00;
+  --color-green: #62ff96;
+  --color-green-dim: #00e475;
+  --color-on-green: #007438;
+
+  /* Surface scale */
+  --color-surface: #131313;
+  --color-surface-lowest: #0e0e0e;
+  --color-surface-low: #1b1b1b;
+  --color-surface-container: #20201f;
+  --color-surface-high: #2a2a2a;
+  --color-surface-highest: #353535;
+  --color-surface-bright: #393939;
+
+  /* On-surface */
+  --color-on-surface: #e5e2e1;
+  --color-on-surface-variant: #c5c9ac;
+
+  /* Lines */
+  --color-outline: #8f9378;
+  --color-outline-variant: #444932;
+
+  /* Status */
+  --color-error: #ffb4ab;
+  --color-error-container: #93000a;
+
+  /* Type families (wired to next/font vars in layout.tsx) */
+  --font-display: var(--font-archivo), system-ui, sans-serif;
+  --font-sans: var(--font-archivo), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+
+  /* Motion */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: dark;
+  --background: #0e0e0e;
+  --foreground: #e5e2e1;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  border-color: var(--color-outline-variant);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+/* Reduce reflow flash of the noise/grid */
+::selection {
+  background: var(--color-lime);
+  color: var(--color-on-lime);
+}
+
+/* ---- Reusable helpers ---- */
+
+.label-caps {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.data-mono {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Massive, tightly-tracked display headings */
+.display {
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+/* Lime primary button — mirrors LimePrimaryButton */
+.btn-lime {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 3.25rem;
+  padding-inline: 1.75rem;
+  border-radius: 0.75rem;
+  background: var(--color-lime);
+  color: var(--color-on-lime);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  box-shadow: 0 0 40px -8px color-mix(in srgb, var(--color-lime) 55%, transparent);
+  transition:
+    transform 0.25s var(--ease-out-expo),
+    box-shadow 0.25s var(--ease-out-expo),
+    background 0.2s;
+  will-change: transform;
+}
+.btn-lime:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 60px -6px color-mix(in srgb, var(--color-lime) 75%, transparent);
+  background: var(--color-lime-dim);
+}
+.btn-lime:active {
+  transform: translateY(0);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 3.25rem;
+  padding-inline: 1.5rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--color-outline-variant);
+  color: var(--color-on-surface);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition:
+    border-color 0.2s,
+    color 0.2s,
+    background 0.2s;
+}
+.btn-ghost:hover {
+  border-color: var(--color-lime);
+  color: var(--color-lime);
+  background: color-mix(in srgb, var(--color-lime) 6%, transparent);
+}
+
+/* Store buttons — identical neutral outline, turn green on hover */
+.btn-store {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 3.25rem;
+  padding-inline: 1.5rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--color-outline-variant);
+  color: var(--color-on-surface);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition:
+    border-color 0.2s,
+    color 0.2s,
+    background 0.2s,
+    box-shadow 0.25s var(--ease-out-expo);
+}
+.btn-store:hover {
+  border-color: var(--color-green);
+  color: var(--color-green);
+  background: color-mix(in srgb, var(--color-green) 8%, transparent);
+  box-shadow: 0 0 40px -10px color-mix(in srgb, var(--color-green) 60%, transparent);
+}
+
+/* Glass card — mirrors GlassCard */
+.glass {
+  background: color-mix(in srgb, var(--color-surface-high) 55%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-outline-variant) 60%, transparent);
+  backdrop-filter: blur(12px);
+}
+
+/* Subtle animated grid backdrop for sections */
+.grid-lines {
+  background-image:
+    linear-gradient(
+      to right,
+      color-mix(in srgb, var(--color-outline-variant) 45%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--color-outline-variant) 45%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 64px 64px;
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 30%, transparent 75%);
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 30%, transparent 75%);
+}
+
+/* Marquee */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee-track {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: marquee 32s linear infinite;
+}
+
+/* Pulsing live dot */
+@keyframes ping-dot {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-green) 70%, transparent);
+  }
+  70%,
+  100% {
+    box-shadow: 0 0 0 10px transparent;
+  }
+}
+.live-dot {
+  animation: ping-dot 1.8s var(--ease-out-expo) infinite;
+}
+
+/* Elements GSAP fades in; start hidden to avoid flash. JS removes .reveal
+   after animating. Falls back to visible if JS is off. */
+.reveal {
+  opacity: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Long-form content (legal / support pages) */
+.prose-convo {
+  color: var(--color-on-surface-variant);
+  line-height: 1.75;
+}
+.prose-convo h2 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  font-size: 1.6rem;
+  color: var(--color-on-surface);
+  margin-top: 2.75rem;
+  margin-bottom: 0.9rem;
+}
+.prose-convo h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--color-on-surface);
+  margin-top: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+.prose-convo p,
+.prose-convo li {
+  font-size: 1rem;
+}
+.prose-convo p {
+  margin-bottom: 1.1rem;
+}
+.prose-convo ul {
+  list-style: none;
+  margin: 0 0 1.4rem;
+  padding: 0;
+}
+.prose-convo ul li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.6rem;
+}
+.prose-convo ul li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  background: var(--color-lime);
+}
+.prose-convo a {
+  color: var(--color-lime);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.prose-convo strong {
+  color: var(--color-on-surface);
+  font-weight: 700;
+}
+.prose-convo .not-prose a {
+  color: inherit;
+  text-decoration: none;
+}
+.prose-convo hr {
+  border: none;
+  border-top: 1px solid color-mix(in srgb, var(--color-outline-variant) 60%, transparent);
+  margin: 2.5rem 0;
+}
+
+/* Thin scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-surface-lowest);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-surface-highest);
+  border-radius: 10px;
+  border: 2px solid var(--color-surface-lowest);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-outline);
 }
