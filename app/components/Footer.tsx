@@ -37,7 +37,7 @@ export default function Footer() {
               title="Company"
               links={[
                 { href: "/support", label: "Support" },
-                { href: "mailto:hello@vynl.in", label: "Contact" },
+                { href: "mailto:hello@convotrack.in", label: "Contact" },
               ]}
             />
             <FooterCol
@@ -52,7 +52,7 @@ export default function Footer() {
 
         <div className="mt-14 flex flex-col items-start justify-between gap-4 border-t border-outline-variant/40 pt-6 sm:flex-row sm:items-center">
           <p className="label-caps text-on-surface-variant/70">
-            © {new Date().getFullYear()} ConvoTrack · vynl.in
+            © {new Date().getFullYear()} ConvoTrack · convotrack.in
           </p>
           <p className="data-mono text-xs text-on-surface-variant/60">
             Built for the road.

@@ -1,7 +1,7 @@
 # ConvoTrack — Website
 
 Public marketing + legal site for **ConvoTrack**, the live group-ride tracking app.
-Deployed at **vynl.in**. No auth, no database — every page is static and public.
+Deployed at **convotrack.in**. No auth, no database — every page is static and public.
 
 ## Stack
 

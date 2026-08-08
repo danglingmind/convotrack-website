@@ -42,21 +42,21 @@ export default function Support() {
     >
       <div className="not-prose mb-14 grid gap-4 sm:grid-cols-2">
         <a
-          href="mailto:hello@vynl.in"
+          href="mailto:hello@convotrack.in"
           className="group rounded-2xl border border-outline-variant/50 bg-surface-low/60 p-6 transition-colors hover:border-lime/40"
         >
           <div className="label-caps text-lime">Email us</div>
-          <div className="display mt-3 text-2xl text-on-surface">hello@vynl.in</div>
+          <div className="display mt-3 text-2xl text-on-surface">hello@convotrack.in</div>
           <p className="mt-2 text-sm text-on-surface-variant">
             General questions, feedback, and account help.
           </p>
         </a>
         <a
-          href="mailto:privacy@vynl.in"
+          href="mailto:privacy@convotrack.in"
           className="group rounded-2xl border border-outline-variant/50 bg-surface-low/60 p-6 transition-colors hover:border-lime/40"
         >
           <div className="label-caps text-lime">Privacy &amp; data</div>
-          <div className="display mt-3 text-2xl text-on-surface">privacy@vynl.in</div>
+          <div className="display mt-3 text-2xl text-on-surface">privacy@convotrack.in</div>
           <p className="mt-2 text-sm text-on-surface-variant">
             Data access and deletion requests.
           </p>
@@ -74,7 +74,7 @@ export default function Support() {
       <hr />
       <p>
         Still stuck? Email{" "}
-        <a href="mailto:hello@vynl.in">hello@vynl.in</a> and we&rsquo;ll get back
+        <a href="mailto:hello@convotrack.in">hello@convotrack.in</a> and we&rsquo;ll get back
         to you.
       </p>
     </PageShell>

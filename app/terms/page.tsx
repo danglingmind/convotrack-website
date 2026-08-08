@@ -54,8 +54,8 @@ export default function Terms() {
 
       <h2>6. Disclaimers and liability</h2>
       <p>
-        To the maximum extent permitted by law, ConvoTrack and vynl.in are not
-        liable for any injury, loss, or damage arising from your use of the
+        To the maximum extent permitted by law, ConvoTrack and its operators are
+        not liable for any injury, loss, or damage arising from your use of the
         service, including reliance on location data, route information, or group
         alerts. The service is provided without warranties of any kind.
       </p>
@@ -70,7 +70,7 @@ export default function Terms() {
       <h2>8. Contact</h2>
       <p>
         Questions about these terms? Email{" "}
-        <a href="mailto:hello@vynl.in">hello@vynl.in</a>.
+        <a href="mailto:hello@convotrack.in">hello@convotrack.in</a>.
       </p>
     </PageShell>
   );

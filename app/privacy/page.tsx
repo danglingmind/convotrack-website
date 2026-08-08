@@ -15,8 +15,8 @@ export default function Privacy() {
     >
       <p>
         ConvoTrack (&ldquo;we&rdquo;, &ldquo;us&rdquo;) is a group-ride tracking
-        app operated by vynl.in. This policy covers the ConvoTrack mobile apps
-        for iOS and Android and this website.
+        app. This policy covers the ConvoTrack mobile apps for iOS and Android
+        and this website.
       </p>
 
       <h2>What we collect</h2>
@@ -78,7 +78,7 @@ export default function Privacy() {
       <h2>Contact</h2>
       <p>
         Questions about privacy? Email{" "}
-        <a href="mailto:privacy@vynl.in">privacy@vynl.in</a>.
+        <a href="mailto:privacy@convotrack.in">privacy@convotrack.in</a>.
       </p>
     </PageShell>
   );
