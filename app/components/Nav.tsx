@@ -11,6 +11,8 @@ const LINKS = [
   { href: "/support", label: "Support" },
 ];
 
+const APP_STORE_URL = "https://apps.apple.com/in/app/convotrack/id6788236830";
+
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -54,7 +56,11 @@ export default function Nav() {
             </Link>
           ))}
           <div className="flex items-center gap-2">
-            <StoreIconButton href="/#download" label="Download on the App Store">
+            <StoreIconButton
+              href={APP_STORE_URL}
+              label="Download on the App Store"
+              external
+            >
               <IconApple />
             </StoreIconButton>
             <StoreIconButton href="/#download" label="Get it on Google Play">
@@ -108,8 +114,9 @@ export default function Nav() {
           ))}
           <div className="mt-3 flex items-center gap-3 px-3">
             <StoreIconButton
-              href="/#download"
+              href={APP_STORE_URL}
               label="Download on the App Store"
+              external
               onClick={() => setOpen(false)}
             >
               <IconApple />
@@ -132,20 +139,35 @@ function StoreIconButton({
   href,
   label,
   onClick,
+  external = false,
   children,
 }: {
   href: string;
   label: string;
   onClick?: () => void;
+  external?: boolean;
   children: React.ReactNode;
 }) {
+  const className =
+    "flex h-10 w-10 items-center justify-center rounded-lg border border-outline-variant/60 text-on-surface transition-all hover:border-green hover:text-green hover:shadow-[0_0_24px_-8px_var(--color-green)]";
+
+  if (external) {
+    return (
+      <a
+        href={href}
+        aria-label={label}
+        onClick={onClick}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={className}
+      >
+        {children}
+      </a>
+    );
+  }
+
   return (
-    <Link
-      href={href}
-      aria-label={label}
-      onClick={onClick}
-      className="flex h-10 w-10 items-center justify-center rounded-lg border border-outline-variant/60 text-on-surface transition-all hover:border-green hover:text-green hover:shadow-[0_0_24px_-8px_var(--color-green)]"
-    >
+    <Link href={href} aria-label={label} onClick={onClick} className={className}>
       {children}
     </Link>
   );

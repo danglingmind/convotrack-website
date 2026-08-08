@@ -440,7 +440,12 @@ function Download() {
           moves as one.
         </p>
         <div className="reveal mt-10 flex flex-wrap items-center justify-center gap-4">
-          <a href="#" className="btn-store">
+          <a
+            href="https://apps.apple.com/in/app/convotrack/id6788236830"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-store"
+          >
             <IconApple />
             App Store
           </a>
