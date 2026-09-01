@@ -45,6 +45,7 @@ export default function Footer() {
               links={[
                 { href: "/privacy", label: "Privacy" },
                 { href: "/terms", label: "Terms" },
+                { href: "/delete-account", label: "Delete account" },
               ]}
             />
           </div>

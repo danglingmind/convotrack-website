@@ -64,15 +64,21 @@ export default function Privacy() {
       <h2>Retention</h2>
       <p>
         Ride history and summaries are kept so you can review past rides. You can
-        request deletion of your account and associated data at any time by
-        contacting us.
+        delete your account and everything attached to it at any time — from the
+        Profile tab in the app, or by email if you no longer have it installed.
+        We delete rather than deactivate. See{" "}
+        <a href="/delete-account">Delete your account</a> for exactly what goes
+        and what briefly outlives it.
       </p>
 
       <h2>Your choices</h2>
       <ul>
         <li>Revoke location permission at any time in your device settings.</li>
         <li>Leave a ride to stop sharing your position immediately.</li>
-        <li>Request access to, or deletion of, your data by emailing us.</li>
+        <li>
+          <a href="/delete-account">Delete your account and all of its data</a>,
+          from the app or by email.
+        </li>
       </ul>
 
       <h2>Contact</h2>
