@@ -47,10 +47,6 @@ export const metadata: Metadata = {
     title: "ConvoTrack — Ride together. Never lose the pack.",
     description: "Live group-ride tracking for riders. One map, every rider.",
   },
-  icons: {
-    icon: "/brand/logo.png",
-    apple: "/brand/appicon.png",
-  },
 };
 
 export const viewport: Viewport = {
