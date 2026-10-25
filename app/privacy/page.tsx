@@ -11,7 +11,7 @@ export default function Privacy() {
     <PageShell
       kicker="Legal"
       title="Privacy Policy"
-      intro="Last updated August 8, 2026. This policy explains what ConvoTrack collects and why. Because a live-tracking app runs on location, we keep this plain."
+      intro="Last updated October 25, 2026. This policy explains what ConvoTrack collects and why. Because a live-tracking app runs on location, we keep this plain."
     >
       <p>
         ConvoTrack (&ldquo;we&rdquo;, &ldquo;us&rdquo;) is a group-ride tracking
@@ -36,6 +36,13 @@ export default function Privacy() {
           <strong>Ride data</strong> — routes you create, invite codes, ride
           participants, and the stats used to build your end-of-ride report.
         </li>
+        <li>
+          <strong>Usage and device data</strong> — which screens and features you
+          use, your device model, operating system and app version, and your
+          device&rsquo;s advertising identifier (on iPhone, only if you allow
+          tracking). Used for analytics and to measure our ads, as described
+          below.
+        </li>
       </ul>
 
       <h2>How we use it</h2>
@@ -54,11 +61,31 @@ export default function Privacy() {
         to the other riders you chose to ride with.
       </p>
 
+      <h2>Analytics and advertising</h2>
+      <p>
+        We use <strong>PostHog</strong> for product analytics: which screens and
+        features are used, tied to your account ID, so we can see what works and
+        what breaks.
+      </p>
+      <p>
+        We use the <strong>Meta</strong> (Meta Platforms, Inc.) SDK to measure our
+        ads on Facebook and Instagram — whether an ad led to an install, a
+        sign-up, a ride, or a subscription. The app sends Meta your
+        device&rsquo;s advertising identifier, basic device information, and
+        those events: app installs and opens, first sign-up, creating or joining
+        a ride, and starting a trial or subscription (with its price). Meta may
+        use this to measure and improve the ads it shows. We never send Meta
+        your name, email, location, ride details, or invite codes. Meta&rsquo;s
+        handling of this data is covered by the{" "}
+        <a href="https://www.facebook.com/privacy/policy/">Meta Privacy Policy</a>.
+      </p>
+
       <h2>Sharing</h2>
       <p>
         We share data only with the infrastructure providers needed to run the
-        service (hosting, authentication, push notifications). We do not sell
-        your personal data. We may disclose information if required by law.
+        service (hosting, authentication, push notifications) and the analytics
+        and advertising partners named above. We do not sell your personal data.
+        We may disclose information if required by law.
       </p>
 
       <h2>Retention</h2>
@@ -75,6 +102,12 @@ export default function Privacy() {
       <ul>
         <li>Revoke location permission at any time in your device settings.</li>
         <li>Leave a ride to stop sharing your position immediately.</li>
+        <li>
+          On iPhone, choose &ldquo;Ask App Not to Track&rdquo; when prompted, or
+          turn tracking off later in Settings → Privacy &amp; Security →
+          Tracking. On Android, reset or delete your advertising ID in Settings →
+          Privacy → Ads.
+        </li>
         <li>
           <a href="/delete-account">Delete your account and all of its data</a>,
           from the app or by email.
