@@ -25,8 +25,19 @@ export const dynamic = "force-static";
 
 const ANDROID_PACKAGE =
   process.env.ANDROID_PACKAGE ?? "com.danglingmind.convotrack";
+// Fingerprints are public (this file publishes them), so they live here rather
+// than only in an env var that is easy to leave unset. The env var still
+// overrides, e.g. after a signing-key upgrade.
+//   Play app signing key — every install from the Play Store (Play Console ->
+//   Test and release -> App integrity; also the cert on Play's generated APKs).
+//   Upload key — locally built, sideloaded release builds.
+const DEFAULT_FINGERPRINTS = [
+  "34:FE:22:37:48:05:F3:DB:B5:3D:DC:2A:18:07:8F:DD:17:8F:A4:19:17:ED:50:C7:4C:3D:95:B7:E2:F6:46:6E",
+  "BF:C6:6C:F8:62:D8:E1:D3:64:32:33:37:08:FE:47:77:5C:34:0C:D2:BA:99:87:EA:58:9F:5A:D0:C0:71:B5:31",
+].join(",");
+
 const ANDROID_SHA256_FINGERPRINTS = (
-  process.env.ANDROID_SHA256_FINGERPRINTS ?? ""
+  process.env.ANDROID_SHA256_FINGERPRINTS || DEFAULT_FINGERPRINTS
 )
   .split(",")
   .map((s) => s.trim())
