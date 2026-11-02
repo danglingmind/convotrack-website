@@ -18,7 +18,10 @@ export function GET() {
         details: [
           {
             appIDs: [IOS_APP_ID],
-            components: [{ "/": "/join/*", comment: "Ride invite links" }],
+            components: [
+              { "/": "/join/*", comment: "Ride invite links" },
+              { "/": "/route/*", comment: "Shared ride routes" },
+            ],
           },
         ],
       },
