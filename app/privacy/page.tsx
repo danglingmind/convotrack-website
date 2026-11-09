@@ -4,6 +4,7 @@ import PageShell from "../components/PageShell";
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description: "How ConvoTrack collects, uses, and protects your data.",
+  alternates: { canonical: "/privacy" },
 };
 
 export default function Privacy() {

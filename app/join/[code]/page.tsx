@@ -1,21 +1,15 @@
 import type { Metadata } from "next";
+import LinkFallback from "../../components/LinkFallback";
 
 // Fallback landing shown only when the app is NOT installed. A verified
 // install opens the app straight into the join screen and this never renders.
 // Canonical invite link shape: https://convotrack.in/join/CODE
 
 export const metadata: Metadata = {
-  title: "Join a ride",
-  description: "You've been invited to a ConvoTrack ride.",
+  title: "You're invited to a ride",
+  description: "You've been invited to a group ride on ConvoTrack. Install the app and join with your code.",
+  robots: { index: false, follow: false },
 };
-
-const ANDROID_PACKAGE =
-  process.env.ANDROID_PACKAGE ?? "com.danglingmind.convotrack";
-const APP_STORE_URL =
-  process.env.APP_STORE_URL ?? "https://apps.apple.com/app/convotrack";
-const PLAY_STORE_URL =
-  process.env.PLAY_STORE_URL ??
-  `https://play.google.com/store/apps/details?id=${ANDROID_PACKAGE}`;
 
 function sanitizeCode(raw: string): string {
   return (raw || "")
@@ -24,54 +18,30 @@ function sanitizeCode(raw: string): string {
     .slice(0, 6);
 }
 
-export default async function JoinRide({
-  params,
-}: {
-  params: Promise<{ code: string }>;
-}) {
+export default async function JoinRide({ params }: PageProps<"/join/[code]">) {
   const { code: rawCode } = await params;
   const code = sanitizeCode(rawCode);
-  const scheme = `convotrack://join/${code}`;
 
   return (
-    <main className="flex min-h-screen items-center justify-center px-6 py-16">
-      <div className="w-full max-w-sm rounded-3xl border border-outline-variant/60 bg-surface-low p-8 text-center">
-        <p className="label-caps text-lime">ConvoTrack</p>
-        <h1 className="display mt-2 text-2xl text-on-surface">
-          You&rsquo;re invited to a ride
-        </h1>
-
-        {code && (
-          <div className="mt-6 rounded-2xl border border-lime bg-on-lime px-4 py-4 font-mono text-3xl font-bold tracking-[0.4em] text-lime">
+    <LinkFallback
+      openHref={`convotrack://join/${code}`}
+      footnote={
+        <>
+          New to ConvoTrack? Install it, then enter code{" "}
+          <b className="font-mono font-medium text-ink">{code || "––––––"}</b> to join.
+        </>
+      }
+    >
+      <p className="text-center text-sm text-muted">Group ride invite</p>
+      <h1 className="h-section mt-2 text-center text-[1.75rem]">You&rsquo;re invited to a ride</h1>
+      {code && (
+        <div className="mt-6 rounded-2xl border border-line bg-paper py-5 text-center">
+          <span className="block text-xs text-muted">Invite code</span>
+          <span className="mt-1 block font-mono text-[2rem] font-medium tracking-[0.3em] text-ink">
             {code}
-          </div>
-        )}
-
-        <a
-          href={scheme}
-          className="mt-6 block rounded-2xl bg-lime px-6 py-4 text-base font-bold text-on-lime transition-opacity hover:opacity-90"
-        >
-          Open in ConvoTrack
-        </a>
-        <a
-          href={APP_STORE_URL}
-          className="mt-3 block rounded-2xl border border-outline-variant/60 bg-surface-container px-6 py-4 text-base font-semibold text-on-surface transition-colors hover:border-lime/40"
-        >
-          Get it on the App Store
-        </a>
-        <a
-          href={PLAY_STORE_URL}
-          className="mt-3 block rounded-2xl border border-outline-variant/60 bg-surface-container px-6 py-4 text-base font-semibold text-on-surface transition-colors hover:border-lime/40"
-        >
-          Get it on Google Play
-        </a>
-
-        <p className="mt-6 text-sm text-on-surface-variant">
-          Have the app? Tap “Open in ConvoTrack”. New here? Install it, then
-          enter code <b className="text-on-surface">{code || "——————"}</b> to
-          join.
-        </p>
-      </div>
-    </main>
+          </span>
+        </div>
+      )}
+    </LinkFallback>
   );
 }

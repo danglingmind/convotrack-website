@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { decodePolyline, type LatLng } from "@/lib/polyline";
+import LinkFallback from "../../components/LinkFallback";
 
 // Fallback landing for a shared ride route, shown only when the app is NOT installed
 // (a verified install opens the app's route preview and this never renders).
@@ -8,13 +9,6 @@ import { decodePolyline, type LatLng } from "@/lib/polyline";
 // start of the route, rider identities and the invite code.
 
 const API_BASE = process.env.API_BASE_URL ?? "https://api.convotrack.in";
-const ANDROID_PACKAGE =
-  process.env.ANDROID_PACKAGE ?? "com.danglingmind.convotrack";
-const APP_STORE_URL =
-  process.env.APP_STORE_URL ?? "https://apps.apple.com/app/convotrack";
-const PLAY_STORE_URL =
-  process.env.PLAY_STORE_URL ??
-  `https://play.google.com/store/apps/details?id=${ANDROID_PACKAGE}`;
 
 const TOKEN_PATTERN = /^[A-HJKMNP-Z2-9]{10}$/;
 
@@ -100,16 +94,16 @@ function RouteSketch({ route }: { route: SharedRoute }) {
       viewBox={`0 0 ${W} ${H}`}
       role="img"
       aria-label={`Route to ${route.destinationName}`}
-      className="mt-6 w-full rounded-2xl border border-outline-variant/60 bg-surface-container"
+      className="mt-6 w-full rounded-2xl bg-night"
     >
       {ridden.length > 0 && planned.length > 1 && (
-        <path d={path(planned)} fill="none" stroke="#caf300" strokeOpacity="0.25" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+        <path d={path(planned)} fill="none" stroke="#cdf22b" strokeOpacity="0.25" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
       )}
-      <path d={path(main)} fill="none" stroke="#caf300" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+      <path d={path(main)} fill="none" stroke="#cdf22b" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
       {stops.map((s, i) => (
-        <circle key={i} cx={x(s)} cy={y(s)} r="5" fill="#131313" stroke="#62ff96" strokeWidth="2.5" />
+        <circle key={i} cx={x(s)} cy={y(s)} r="5" fill="#0b0d0a" stroke="#ffffff" strokeWidth="2.5" />
       ))}
-      <circle cx={x(end)} cy={y(end)} r="6" fill="#caf300" />
+      <circle cx={x(end)} cy={y(end)} r="6" fill="#cdf22b" />
     </svg>
   );
 }
@@ -131,63 +125,45 @@ export default async function SharedRoutePage({
   const scheme = `convotrack://route/${TOKEN_PATTERN.test(token) ? token : ""}`;
 
   return (
-    <main className="flex min-h-screen items-center justify-center px-6 py-16">
-      <div className="w-full max-w-sm rounded-3xl border border-outline-variant/60 bg-surface-low p-8 text-center">
-        <p className="label-caps text-lime">ConvoTrack</p>
-        {route ? (
-          <>
-            <h1 className="display mt-2 text-2xl text-on-surface">{route.title}</h1>
-            <p className="mt-2 text-sm text-on-surface-variant">
-              {route.sharedBy ? `Shared by ${route.sharedBy.firstName} · ` : ""}
-              to {route.destinationName}
-            </p>
-            <RouteSketch route={route} />
-            <p className="mt-4 text-sm text-on-surface">
-              {(route.distanceMeters / 1000).toFixed(0)} km
-              {duration(route.durationSeconds) ? ` · ${duration(route.durationSeconds)}` : ""}
-              {route.leaderStops.length
-                ? ` · ${route.leaderStops.length} regroup stop${route.leaderStops.length === 1 ? "" : "s"}`
-                : ""}
-            </p>
-          </>
-        ) : (
-          <>
-            <h1 className="display mt-2 text-2xl text-on-surface">
-              This route isn&rsquo;t available
-            </h1>
-            <p className="mt-3 text-sm text-on-surface-variant">
-              The link may have been turned off by the rider who shared it.
-            </p>
-          </>
-        )}
-
-        {route && (
-          <a
-            href={scheme}
-            className="mt-6 block rounded-2xl bg-lime px-6 py-4 text-base font-bold text-on-lime transition-opacity hover:opacity-90"
-          >
-            Open in ConvoTrack
-          </a>
-        )}
-        <a
-          href={APP_STORE_URL}
-          className="mt-3 block rounded-2xl border border-outline-variant/60 bg-surface-container px-6 py-4 text-base font-semibold text-on-surface transition-colors hover:border-lime/40"
-        >
-          Get it on the App Store
-        </a>
-        <a
-          href={PLAY_STORE_URL}
-          className="mt-3 block rounded-2xl border border-outline-variant/60 bg-surface-container px-6 py-4 text-base font-semibold text-on-surface transition-colors hover:border-lime/40"
-        >
-          Get it on Google Play
-        </a>
-        {route && (
-          <p className="mt-6 text-sm text-on-surface-variant">
-            Install ConvoTrack, then open this link again to ride this route with
-            your own group.
+    <LinkFallback
+      openHref={route ? scheme : undefined}
+      footnote={
+        route
+          ? "Install ConvoTrack, then open this link again to ride this route with your own group."
+          : undefined
+      }
+    >
+      {route ? (
+        <>
+          <p className="text-center text-sm text-muted">
+            {route.sharedBy ? `Shared by ${route.sharedBy.firstName} · ` : ""}to{" "}
+            {route.destinationName}
           </p>
-        )}
-      </div>
-    </main>
+          <h1 className="h-section mt-2 text-center text-[1.75rem]">{route.title}</h1>
+          <RouteSketch route={route} />
+          <dl className="mt-4 grid grid-cols-3 divide-x divide-line rounded-2xl border border-line text-center">
+            <Stat label="Distance" value={`${(route.distanceMeters / 1000).toFixed(0)} km`} />
+            <Stat label="Time" value={duration(route.durationSeconds) ?? "–"} />
+            <Stat label="Stops" value={String(route.leaderStops.length)} />
+          </dl>
+        </>
+      ) : (
+        <>
+          <h1 className="h-section text-center text-[1.75rem]">This route isn&rsquo;t available</h1>
+          <p className="mt-3 text-center text-sm text-muted">
+            The link may have been turned off by the rider who shared it.
+          </p>
+        </>
+      )}
+    </LinkFallback>
+  );
+}
+
+function Stat({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="py-3">
+      <dt className="text-xs text-muted">{label}</dt>
+      <dd className="tabular mt-0.5 font-medium">{value}</dd>
+    </div>
   );
 }

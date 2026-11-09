@@ -1,22 +1,30 @@
-import Image from "next/image";
+import Link from "next/link";
 import Nav from "./components/Nav";
 import Footer from "./components/Footer";
-import RouteScene from "./components/RouteScene";
-import ScrollFX from "./components/ScrollFX";
+import Phone from "./components/Phone";
+import AutoVideo from "./components/AutoVideo";
+import JsonLd from "./components/JsonLd";
+import { StoreButtons } from "./components/StoreButtons";
+import { FAQ } from "@/lib/faq";
+import { APP_STORE_URL, DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
 
 export default function Home() {
   return (
     <>
+      <StructuredData />
       <Nav />
-      <ScrollFX />
       <main className="flex-1">
         <Hero />
-        <Marquee />
-        <Stats />
-        <Features />
+        <Facts />
+        <Problem />
+        <Film />
+        <Showcase />
+        <MoreFeatures />
         <HowItWorks />
-        <Roles />
-        <Download />
+        <UseCases />
+        <Privacy />
+        <Faq />
+        <FinalCta />
       </main>
       <Footer />
     </>
@@ -26,322 +34,280 @@ export default function Home() {
 /* ------------------------------------------------------------------ Hero */
 function Hero() {
   return (
-    <section className="relative min-h-[100svh] overflow-hidden">
-      <RouteScene />
-      {/* Legibility gradient */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-surface-lowest/40 via-transparent to-surface-lowest" />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-surface-lowest to-transparent" />
+    <section className="relative overflow-hidden">
+      <div className="mx-auto grid max-w-6xl items-center gap-14 px-4 pb-20 pt-12 sm:px-6 sm:pt-16 lg:grid-cols-[1.08fr_0.92fr] lg:gap-12 lg:pb-24 lg:pt-16">
+        <div>
+          <p className="rise rise-1 inline-flex items-center gap-2 rounded-full border border-line bg-card px-3 py-1.5 text-[0.8rem] text-ink-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#2fb344]" aria-hidden />
+            Group ride tracking app for iPhone
+          </p>
 
-      <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-7xl flex-col justify-center px-5 pb-24 pt-32 sm:px-8">
-        <div className="inline-flex w-fit items-center gap-2 rounded-full border border-outline-variant/50 bg-surface-low/60 px-3.5 py-1.5 backdrop-blur">
-          <span className="live-dot h-2 w-2 rounded-full bg-green" />
-          <span className="label-caps text-on-surface-variant">
-            Live group-ride tracking
-          </span>
+          <h1 className="h-display rise rise-2 mt-6 text-[clamp(2.6rem,6.4vw,4.75rem)]">
+            The group ride app that keeps every rider on{" "}
+            <span className="mark">one&nbsp;map</span>.
+          </h1>
+
+          <p className="lede rise rise-3 mt-6 max-w-xl text-[1.125rem] leading-relaxed text-muted">
+            ConvoTrack shows your whole group live, guides everyone with
+            turn-by-turn voice navigation, and lets anyone call a regroup or an
+            SOS in one tap. Built for motorcycle rides, road trips and convoys.
+          </p>
+
+          <div className="rise rise-4 mt-9">
+            <StoreButtons />
+            <p className="mt-5 text-sm text-faint">
+              Free to download · Sign in with Apple or Google · Friends join
+              with a link
+            </p>
+          </div>
         </div>
 
-        <h1 className="display mt-6 max-w-4xl text-[clamp(3rem,9vw,7.5rem)] text-on-surface">
-          Ride together.
-          <br />
-          <span className="text-lime">Never lose the&nbsp;pack.</span>
-        </h1>
-
-        <p className="mt-7 max-w-xl text-lg leading-relaxed text-on-surface-variant text-balance">
-          ConvoTrack puts every rider on one live map. Roll out as a group,
-          hold formation, regroup in a single tap, and get a full ride report
-          the moment you arrive.
-        </p>
-
-        <div className="mt-9 flex flex-wrap items-center gap-4">
-          <a href="#download" className="btn-lime">
-            Get the app
-          </a>
-          <a href="#how" className="btn-ghost">
-            See how it works
-          </a>
+        <div className="rise rise-3 relative mx-auto w-full max-w-[440px] lg:max-w-none">
+          <div
+            aria-hidden
+            className="absolute inset-[12%] rounded-full bg-lime/[0.07] blur-3xl"
+          />
+          <AutoVideo
+            src="/video/walkthrough.mp4"
+            poster="/video/walkthrough-poster.webp"
+            label="ConvoTrack walkthrough: planning a ride to Nandi Hills, creating it, and starting navigation"
+            className="video-blend relative aspect-[4/5] w-full object-cover"
+          />
         </div>
-
-        {/* Floating telemetry, mirrors the app's FloatingStatPill */}
-        <div className="mt-16 flex flex-wrap gap-3">
-          <StatPill label="Pack" value="6" unit="riders" dot="lime" />
-          <StatPill label="Lead progress" value="42.8" unit="km" />
-          <StatPill label="Group split" value="120" unit="m" dot="green" />
-          <StatPill label="Status" value="LIVE" dot="green" />
-        </div>
-      </div>
-
-      <div className="pointer-events-none absolute inset-x-0 bottom-6 z-10 flex justify-center">
-        <span className="label-caps animate-pulse text-on-surface-variant/60">
-          Scroll ↓
-        </span>
       </div>
     </section>
   );
 }
 
-function StatPill({
-  label,
-  value,
-  unit,
-  dot,
-}: {
-  label: string;
-  value: string;
-  unit?: string;
-  dot?: "lime" | "green";
-}) {
-  return (
-    <div className="glass rounded-xl px-4 py-3">
-      <div className="label-caps text-on-surface-variant/80">{label}</div>
-      <div className="mt-1 flex items-baseline gap-1.5">
-        {dot && (
-          <span
-            className={`h-1.5 w-1.5 rounded-full ${
-              dot === "lime" ? "bg-lime" : "bg-green"
-            }`}
-          />
-        )}
-        <span
-          className={`data-mono text-base font-bold ${
-            dot === "green" ? "text-green" : "text-on-surface"
-          }`}
-        >
-          {value}
-        </span>
-        {unit && (
-          <span className="text-[11px] text-on-surface-variant">{unit}</span>
-        )}
-      </div>
-    </div>
-  );
-}
-
-/* --------------------------------------------------------------- Marquee */
-function Marquee() {
-  const items = [
-    "LIVE MAP",
-    "◆",
-    "HOLD FORMATION",
-    "◆",
-    "REGROUP",
-    "◆",
-    "EMERGENCY ALERTS",
-    "◆",
-    "INVITE BY LINK",
-    "◆",
-    "RIDE REPORT",
-    "◆",
-    "TURN-BY-TURN",
-    "◆",
+/* ----------------------------------------------------------------- Facts */
+function Facts() {
+  const facts = [
+    { k: "Live", v: "Every rider's position on one map" },
+    { k: "Voice", v: "Turn-by-turn navigation for the group" },
+    { k: "1 tap", v: "Regroup or SOS, sent to everyone" },
+    { k: "Link", v: "Invite by link, QR or 6-letter code" },
   ];
-  const row = [...items, ...items];
   return (
-    <div className="relative overflow-hidden border-y border-outline-variant/40 bg-lime py-4">
-      <div className="marquee-track">
-        {row.map((t, i) => (
-          <span
-            key={i}
-            className="mx-6 font-mono text-sm font-bold uppercase tracking-[0.2em] text-on-lime"
+    <section aria-label="At a glance" className="border-y border-line">
+      <dl className="mx-auto grid max-w-6xl grid-cols-2 px-4 sm:px-6 lg:grid-cols-4">
+        {facts.map((f, i) => (
+          <div
+            key={f.k}
+            className={`py-7 pr-4 ${i % 2 ? "pl-5 sm:pl-8" : ""} ${
+              i > 0 ? "lg:border-l lg:border-line lg:pl-8" : ""
+            } ${i % 2 ? "border-l border-line" : ""} ${i > 1 ? "border-t border-line lg:border-t-0" : ""}`}
           >
-            {t}
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-/* ----------------------------------------------------------------- Stats */
-function Stats() {
-  const stats = [
-    { end: "0", count: "0", label: "Riders left behind", suffix: "" },
-    { end: "1", count: "1", label: "Map, every rider", suffix: "" },
-    { end: "6", count: "6", label: "Char invite codes", suffix: "" },
-    { end: "100", count: "100", label: "Live updates", suffix: "%" },
-  ];
-  return (
-    <section className="relative border-b border-outline-variant/40 bg-surface-lowest py-20">
-      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-x-6 gap-y-12 px-5 sm:px-8 lg:grid-cols-4">
-        {stats.map((s) => (
-          <div key={s.label} className="reveal">
-            <div className="display flex items-baseline text-6xl text-lime sm:text-7xl">
-              <span data-count={s.count}>0</span>
-              <span>{s.suffix}</span>
-            </div>
-            <div className="mt-3 max-w-[10rem] text-sm text-on-surface-variant">
-              {s.label}
-            </div>
+            <dt className="text-[1.35rem] font-semibold tracking-[-0.03em]">{f.k}</dt>
+            <dd className="mt-1 text-sm leading-snug text-muted">{f.v}</dd>
           </div>
         ))}
+      </dl>
+    </section>
+  );
+}
+
+/* --------------------------------------------------------------- Problem */
+function Problem() {
+  return (
+    <section className="mx-auto max-w-4xl px-4 py-24 sm:px-6 sm:py-32">
+      <p className="h-section text-[clamp(1.6rem,3.6vw,2.6rem)] text-ink">
+        Group rides fall apart at the first junction.{" "}
+        <span className="text-faint">
+          Someone misses the exit, someone stops for fuel, and the rest of the
+          day is phone calls at the side of the road. ConvoTrack keeps the
+          whole group in view, so you spend the ride riding.
+        </span>
+      </p>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ Film */
+function Film() {
+  return (
+    <section aria-labelledby="film-title" className="mx-auto max-w-6xl px-4 pb-24 sm:px-6 sm:pb-32">
+      <div className="mb-8 flex flex-col justify-between gap-3 sm:flex-row sm:items-end">
+        <h2 id="film-title" className="h-section text-[clamp(1.5rem,3vw,2rem)]">
+          What the group sees on the road.
+        </h2>
+        <p className="max-w-sm text-sm leading-relaxed text-muted">
+          Every rider, the gap between you, and a regroup call, all on one
+          live map.
+        </p>
+      </div>
+      <div className="overflow-hidden rounded-2xl border border-line sm:rounded-3xl">
+        <AutoVideo
+          lazy
+          src="/video/ride-film.mp4"
+          smallSrc="/video/ride-film-sm.mp4"
+          poster="/video/ride-film-poster.webp"
+          label="Four riders on a winding road on the ConvoTrack live map, with distances between them and a regroup call"
+          className="block aspect-[21/9] w-full object-cover"
+        />
       </div>
     </section>
   );
 }
 
-/* -------------------------------------------------------------- Features */
-function Features() {
+/* --------------------------------------------------------------- Showcase */
+const SHOWCASE = [
+  {
+    id: "live-map",
+    label: "Live group map",
+    title: "See every rider, live, on one map.",
+    body: "Each rider appears on the map with their name and distance from you. Nobody has to pull over to count heads or guess which exit the lead bike took.",
+    points: [
+      "Distance to every rider, updated live",
+      "Riders who drift off screen stay pinned to the edge",
+      "An alert when the group stretches too far apart",
+    ],
+    src: "/screens/live-map-edge.webp",
+    alt: "ConvoTrack live map with riders ahead of the screen pinned to its edge",
+  },
+  {
+    id: "regroup",
+    label: "Regroup",
+    title: "Call a stop in one tap.",
+    body: "Pick fuel, food or a scenic stop and everyone gets the call with a pin on their map. No hand signals, no shouting over engines.",
+    points: [
+      "Set the meet point: here, 100 m or 500 m away",
+      "A banner and map pin for every rider",
+      "Riders mark themselves arrived",
+    ],
+    src: "/screens/regroup.webp",
+    alt: "ConvoTrack regroup sheet with fuel stop, food stop, scenic stop and emergency options",
+  },
+  {
+    id: "emergency",
+    label: "Emergency alerts",
+    title: "When something goes wrong, everyone knows.",
+    body: "The emergency button sends an urgent alert to the whole group with your position on the map, so they know who needs help and where to head.",
+    points: [
+      "One tap from the navigation screen",
+      "Shows who raised it and where they are",
+      "Separate from regroup, so it never gets missed",
+    ],
+    src: "/screens/emergency.webp",
+    alt: "ConvoTrack emergency alert telling the group a rider needs help and where they are",
+  },
+  {
+    id: "ride-summary",
+    label: "Ride summary",
+    title: "A ride report the moment you park.",
+    body: "Distance, duration, average speed and how far the group ever split, plus the final order everyone arrived in. Share it as a card with the group.",
+    points: [
+      "Total distance, time and average speed",
+      "Max group split for the whole ride",
+      "A summary card made for sharing",
+    ],
+    src: "/screens/ride-summary.webp",
+    alt: "ConvoTrack ride summary showing distance, duration, average speed and max group split",
+  },
+];
+
+function Showcase() {
   return (
-    <section id="features" className="relative scroll-mt-20 py-28">
-      <div className="absolute inset-0 grid-lines opacity-70" />
-      <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
-        <SectionHeader
-          kicker="What it does"
-          title="Everything the pack needs, on one screen."
-        />
+    <section id="features" className="on-night scroll-mt-16 border-y border-line bg-night text-ink">
+      <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6 sm:py-32">
+        <div className="max-w-2xl">
+          <p className="eyebrow text-lime">Features</p>
+          <h2 className="h-section mt-4 text-[clamp(2rem,4.6vw,3.25rem)]">
+            Everything the group needs, on one screen.
+          </h2>
+          <p className="lede mt-5 text-lg leading-relaxed text-night-muted">
+            Designed to be read at a glance from a handlebar mount: big numbers,
+            clear alerts, nothing you have to dig for.
+          </p>
+        </div>
 
-        <div className="mt-16 grid gap-4 md:grid-cols-6">
-          {/* Big feature — live map */}
-          <FeatureCard
-            className="md:col-span-4 md:row-span-2"
-            big
-            icon={<IconMap />}
-            title="Live map, every rider"
-            body="See the whole convoy move in real time — each rider as a pin with their photo, role, and live position. No more pulling over to count heads."
-          >
-            <div className="mt-8 grid grid-cols-3 gap-3">
-              <MiniStat label="Pack" value="6" />
-              <MiniStat label="Split" value="120 m" tone="green" />
-              <MiniStat label="Lead" value="42.8 km" />
-            </div>
-          </FeatureCard>
-
-          <FeatureCard
-            className="md:col-span-2"
-            icon={<IconRegroup />}
-            title="Regroup in a tap"
-            body="Fuel, food, or a photo stop — ping everyone to pull in at once."
-          />
-          <FeatureCard
-            className="md:col-span-2"
-            icon={<IconAlert />}
-            title="Emergency alerts"
-            body="One button broadcasts trouble to the entire group instantly."
-            tone="error"
-          />
-          <FeatureCard
-            className="md:col-span-3"
-            icon={<IconLink />}
-            title="Invite by link"
-            body="Share a tappable link or 6-char code. Riders join in seconds — no accounts to hunt for."
-          />
-          <FeatureCard
-            className="md:col-span-3"
-            icon={<IconReport />}
-            title="Ride report"
-            body="Distance, duration, and how far the group ever stretched — a full summary the moment you park."
-          />
+        <div className="mt-20 space-y-24 sm:space-y-32">
+          {SHOWCASE.map((f, i) => (
+            <article
+              key={f.id}
+              id={f.id}
+              className="grid scroll-mt-24 items-center gap-12 md:grid-cols-2 md:gap-16"
+            >
+              <div className={`mx-auto w-full max-w-[240px] md:max-w-[290px] ${i % 2 ? "md:order-2" : ""}`}>
+                <Phone src={f.src} alt={f.alt} sizes="290px" className="!bg-night-3" />
+              </div>
+              <div className={i % 2 ? "md:order-1" : ""}>
+                <p className="eyebrow text-night-muted">
+                  <span className="text-lime">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="mx-2 opacity-40">/</span>
+                  {f.label}
+                </p>
+                <h3 className="h-section mt-4 text-[clamp(1.6rem,3vw,2.25rem)]">
+                  {f.title}
+                </h3>
+                <p className="lede mt-4 max-w-md leading-relaxed text-night-muted">{f.body}</p>
+                <ul className="mt-8 max-w-md divide-y divide-night-line border-y border-night-line">
+                  {f.points.map((p) => (
+                    <li key={p} className="flex items-center gap-3 py-3.5 text-[0.95rem]">
+                      <CheckIcon className="shrink-0 text-lime" />
+                      {p}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </article>
+          ))}
         </div>
       </div>
     </section>
   );
 }
 
-function FeatureCard({
-  icon,
-  title,
-  body,
-  className = "",
-  big = false,
-  tone,
-  children,
-}: {
-  icon: React.ReactNode;
-  title: string;
-  body: string;
-  className?: string;
-  big?: boolean;
-  tone?: "error" | "green";
-  children?: React.ReactNode;
-}) {
-  const accent =
-    tone === "error"
-      ? "text-error"
-      : tone === "green"
-        ? "text-green"
-        : "text-lime";
-  return (
-    <div
-      className={`reveal group relative flex flex-col overflow-hidden rounded-2xl border border-outline-variant/50 bg-surface-low/60 p-7 transition-colors hover:border-lime/40 ${className}`}
-    >
-      <div
-        className={`flex h-12 w-12 items-center justify-center rounded-xl bg-surface-container ${accent} ring-1 ring-inset ring-outline-variant/60 transition-colors group-hover:ring-lime/50`}
-      >
-        {icon}
-      </div>
-      <h3
-        className={`display mt-6 text-on-surface ${big ? "text-3xl sm:text-4xl" : "text-2xl"}`}
-      >
-        {title}
-      </h3>
-      <p
-        className={`mt-3 leading-relaxed text-on-surface-variant ${big ? "max-w-md text-base" : "text-sm"}`}
-      >
-        {body}
-      </p>
-      {children}
-      <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-lime/5 blur-3xl transition-opacity group-hover:bg-lime/10" />
-    </div>
-  );
-}
-
-function MiniStat({
-  label,
-  value,
-  tone,
-}: {
-  label: string;
-  value: string;
-  tone?: "green";
-}) {
-  return (
-    <div className="rounded-xl border border-outline-variant/50 bg-surface-container/60 px-4 py-3">
-      <div className="label-caps text-on-surface-variant/70">{label}</div>
-      <div
-        className={`data-mono mt-1 text-lg font-bold ${
-          tone === "green" ? "text-green" : "text-on-surface"
-        }`}
-      >
-        {value}
-      </div>
-    </div>
-  );
-}
-
-/* ----------------------------------------------------------- How it works */
-function HowItWorks() {
-  const steps = [
+/* ----------------------------------------------------------- More features */
+function MoreFeatures() {
+  const items = [
     {
-      n: "01",
-      title: "Create a ride",
-      body: "Drop a destination, pick your route from live alternatives, and set the pack rolling.",
+      icon: <IconNav />,
+      title: "Turn-by-turn voice navigation",
+      body: "Spoken directions to the destination for every rider, so the leader isn't the only one who knows the way.",
     },
     {
-      n: "02",
-      title: "Share the link",
-      body: "Send a tappable invite. Riders join the lobby and mark ready — you see them light up.",
+      icon: <IconRoute />,
+      title: "Plan the route and stops",
+      body: "Search a destination, compare routes and add stops before anyone rolls out.",
     },
     {
-      n: "03",
-      title: "Roll out",
-      body: "Everyone tracks everyone. Regroup, reroute, or call it — then read the report at the end.",
+      icon: <IconUsers />,
+      title: "Rider roles",
+      body: "Ride Leader, Pace Keeper, Trail Guardian and Formation Riders, so everyone knows their place in the group.",
+    },
+    {
+      icon: <IconLink />,
+      title: "Invite by link, QR or code",
+      body: "Share a link in the group chat, show a QR code, or read out a 6-letter code. Joining takes seconds.",
+    },
+    {
+      icon: <IconCheck />,
+      title: "Ready check in the lobby",
+      body: "See who has joined and who is ready before the ride starts. No more waiting on the one rider still getting fuel.",
+    },
+    {
+      icon: <IconShare />,
+      title: "Share a route",
+      body: "Send a route you've ridden to another group, so they can ride the same roads with ConvoTrack.",
     },
   ];
   return (
-    <section id="how" className="relative scroll-mt-20 border-y border-outline-variant/40 bg-surface-lowest py-28">
-      <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <SectionHeader kicker="How it works" title="From solo to convoy in three steps." />
-        <div className="mt-16 grid gap-px overflow-hidden rounded-2xl border border-outline-variant/50 bg-outline-variant/40 md:grid-cols-3">
-          {steps.map((s) => (
-            <div
-              key={s.n}
-              className="reveal group relative flex flex-col bg-surface-low p-8 transition-colors hover:bg-surface-container sm:p-10"
-            >
-              <span className="data-mono text-sm text-lime">{s.n}</span>
-              <div className="mt-8 h-px w-full bg-outline-variant/40" />
-              <h3 className="display mt-8 text-3xl text-on-surface">{s.title}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-on-surface-variant">
-                {s.body}
-              </p>
+    <section className="mx-auto max-w-6xl px-4 py-24 sm:px-6 sm:py-32">
+      <div className="grid gap-6 lg:grid-cols-[1fr_1.6fr] lg:gap-16">
+        <div className="lg:sticky lg:top-28 lg:self-start">
+          <p className="eyebrow text-muted">And the rest</p>
+          <h2 className="h-section mt-4 text-[clamp(1.9rem,4vw,2.75rem)]">
+            Small things that make a big ride easier.
+          </h2>
+        </div>
+        <div className="grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2">
+          {items.map((it) => (
+            <div key={it.title} className="bg-card p-7">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-paper text-lime ring-1 ring-inset ring-line">
+                {it.icon}
+              </div>
+              <h3 className="mt-5 text-[1.05rem] font-semibold tracking-[-0.02em]">{it.title}</h3>
+              <p className="mt-2 text-[0.95rem] leading-relaxed text-muted">{it.body}</p>
             </div>
           ))}
         </div>
@@ -350,199 +316,337 @@ function HowItWorks() {
   );
 }
 
-/* ----------------------------------------------------------------- Roles */
-function Roles() {
-  const roles = [
+/* ----------------------------------------------------------- How it works */
+function HowItWorks() {
+  const steps = [
     {
-      title: "Ride Leader",
-      body: "Sets the route and pace. The pack's progress is measured against the leader.",
+      title: "Plan the ride",
+      body: "Set the destination, choose a route and add any stops along the way.",
     },
     {
-      title: "Pace Keeper",
-      body: "Holds the rhythm mid-pack so the group never stretches too thin.",
+      title: "Invite the group",
+      body: "Share the link or code. Riders join the lobby and mark themselves ready.",
     },
     {
-      title: "Trail Guardian",
-      body: "Rides sweep at the back — the last set of eyes, nobody left behind.",
-    },
-    {
-      title: "Formation Rider",
-      body: "The core of the convoy, tracked live and ready to regroup on call.",
+      title: "Ride as one",
+      body: "Start the ride. Everyone navigates, sees the group live and can regroup in a tap.",
     },
   ];
   return (
-    <section id="roles" className="relative scroll-mt-20 py-28">
-      <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <div className="grid gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-          <div className="reveal">
-            <SectionHeader
-              kicker="Roles"
-              title="Every rider has a place in the pack."
-              align="left"
-            />
-            <p className="mt-6 max-w-md text-on-surface-variant leading-relaxed">
-              ConvoTrack gives the group structure without the shouting. Assign
-              roles, and the map reflects who's leading, holding pace, and
-              sweeping the tail.
-            </p>
-          </div>
-
-          <div className="grid gap-4 sm:grid-cols-2">
-            {roles.map((r, i) => (
-              <div
-                key={r.title}
-                className="reveal rounded-2xl border border-outline-variant/50 bg-surface-low/60 p-6 transition-colors hover:border-lime/40"
-              >
-                <div className="flex items-center gap-3">
-                  <span className="data-mono text-xs text-lime">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span className="h-px flex-1 bg-outline-variant/40" />
+    <section id="how-it-works" className="scroll-mt-16 border-y border-line bg-night">
+      <div className="mx-auto grid max-w-6xl items-center gap-16 px-4 py-24 sm:px-6 sm:py-28 lg:grid-cols-[1.2fr_0.8fr]">
+        <div>
+          <p className="eyebrow text-muted">How it works</p>
+          <h2 className="h-section mt-4 text-[clamp(1.9rem,4vw,2.75rem)]">
+            From the group chat to the open road in minutes.
+          </h2>
+          <ol className="mt-12 space-y-0">
+            {steps.map((s, i) => (
+              <li key={s.title} className="grid grid-cols-[3rem_1fr] border-t border-line py-6 last:border-b">
+                <span className="tabular pt-0.5 font-mono text-sm text-faint">
+                  0{i + 1}
+                </span>
+                <div>
+                  <h3 className="text-lg font-semibold tracking-[-0.02em]">{s.title}</h3>
+                  <p className="mt-1.5 leading-relaxed text-muted">{s.body}</p>
                 </div>
-                <h3 className="display mt-5 text-2xl text-lime">{r.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-on-surface-variant">
-                  {r.body}
-                </p>
-              </div>
+              </li>
             ))}
-          </div>
+          </ol>
+        </div>
+        <div className="mx-auto w-full max-w-[240px] md:max-w-[280px]">
+          <Phone
+            src="/screens/lobby.webp"
+            alt="ConvoTrack ride lobby with four riders marked ready and the invite code"
+            sizes="280px"
+          />
         </div>
       </div>
     </section>
   );
 }
 
-/* -------------------------------------------------------------- Download */
-function Download() {
+/* -------------------------------------------------------------- Use cases */
+function UseCases() {
+  const cases = [
+    {
+      title: "Motorcycle group rides",
+      body: "Weekend loops, breakfast runs and long tours. Keep the pack together through traffic, ghats and highway exits.",
+    },
+    {
+      title: "Road trips and car convoys",
+      body: "Several cars, one destination. Everyone follows the same route and sees where the others are without calling.",
+    },
+    {
+      title: "Riding clubs and tours",
+      body: "Give the lead, sweep and pace riders clear roles, and get a full report of how the group rode.",
+    },
+  ];
   return (
-    <section id="download" className="relative scroll-mt-20 overflow-hidden py-32">
-      <div className="absolute inset-0 grid-lines opacity-60" />
-      <div
-        className="pointer-events-none absolute left-1/2 top-1/2 h-[36rem] w-[36rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-lime/10 blur-[120px]"
-        data-parallax="-20"
-      />
-      <div className="relative mx-auto max-w-4xl px-5 text-center sm:px-8">
-        <Image
-          src="/brand/logo.png"
-          alt="ConvoTrack"
-          width={80}
-          height={80}
-          className="reveal mx-auto h-20 w-20 rounded-full ring-1 ring-lime/40"
-        />
-        <h2
-          data-fx="split"
-          className="display mt-8 text-[clamp(2.5rem,7vw,5.5rem)] text-on-surface"
-        >
-          Bring the whole pack.
-        </h2>
-        <p className="reveal mx-auto mt-6 max-w-xl text-lg text-on-surface-variant text-balance">
-          Download ConvoTrack and turn your next group ride into a convoy that
-          moves as one.
-        </p>
-        <div className="reveal mt-10 flex flex-wrap items-center justify-center gap-4">
-          <a
-            href="https://apps.apple.com/in/app/convotrack/id6788236830"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-store"
-          >
-            <IconApple />
-            App Store
-          </a>
-          <a href="#" className="btn-store">
-            <IconPlay />
-            Google Play
-          </a>
-        </div>
-        <p className="reveal label-caps mt-8 text-on-surface-variant/60">
-          iOS &amp; Android · Free to ride
-        </p>
-      </div>
-    </section>
-  );
-}
-
-/* --------------------------------------------------------- Shared header */
-function SectionHeader({
-  kicker,
-  title,
-  align = "center",
-}: {
-  kicker: string;
-  title: string;
-  align?: "center" | "left";
-}) {
-  return (
-    <div className={align === "center" ? "mx-auto max-w-2xl text-center" : ""}>
-      <div
-        className={`inline-flex items-center gap-2 ${align === "center" ? "" : ""}`}
-      >
-        <span className="h-px w-8 bg-lime" />
-        <span className="label-caps text-lime">{kicker}</span>
-      </div>
-      <h2
-        data-fx="split"
-        className={`display mt-5 text-4xl text-on-surface sm:text-5xl ${
-          align === "center" ? "" : ""
-        }`}
-      >
-        {title}
+    <section id="use-cases" className="mx-auto max-w-6xl scroll-mt-16 px-4 py-24 sm:px-6 sm:py-32">
+      <p className="eyebrow text-muted">Who it&apos;s for</p>
+      <h2 className="h-section mt-4 max-w-2xl text-[clamp(1.9rem,4vw,2.75rem)]">
+        Built for any group that travels together.
       </h2>
-    </div>
+      <div className="mt-14 grid gap-4 md:grid-cols-3">
+        {cases.map((c, i) => (
+          <article
+            key={c.title}
+            className="rounded-2xl border border-line bg-card p-7 transition-colors hover:border-line-strong"
+          >
+            <span className="tabular font-mono text-sm text-faint">0{i + 1}</span>
+            <h3 className="mt-10 text-xl font-semibold tracking-[-0.025em]">{c.title}</h3>
+            <p className="mt-2.5 leading-relaxed text-muted">{c.body}</p>
+          </article>
+        ))}
+      </div>
+    </section>
   );
 }
 
-/* ----------------------------------------------------------------- Icons */
-function IconMap() {
+/* ---------------------------------------------------------------- Privacy */
+function Privacy() {
+  const points = [
+    "Location is shared only while a ride is live",
+    "Only the riders in your ride can see you",
+    "Leave a ride and sharing stops immediately",
+    "We never sell location data or use it for ads",
+  ];
   return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2Z" />
-      <path d="M9 4v14M15 6v14" />
+    <section id="privacy" className="scroll-mt-16 px-4 sm:px-6">
+      <div className="mx-auto grid max-w-6xl gap-10 rounded-3xl border border-lime/15 bg-lime-soft px-6 py-14 sm:px-12 sm:py-16 lg:grid-cols-2 lg:gap-16">
+        <div>
+          <p className="eyebrow text-olive">Privacy</p>
+          <h2 className="h-section mt-4 text-[clamp(1.9rem,4vw,2.75rem)]">
+            Your location, only on the ride.
+          </h2>
+          <p className="lede mt-5 max-w-md leading-relaxed text-ink-2">
+            A tracking app has to earn trust. ConvoTrack shares where you are
+            with the people you chose to ride with, for as long as you ride
+            with them, and nothing more.
+          </p>
+          <Link
+            href="/privacy"
+            className="mt-7 inline-flex items-center gap-1.5 text-sm font-medium text-ink underline decoration-ink/25 underline-offset-4 transition-colors hover:decoration-ink"
+          >
+            Read the privacy policy <ArrowIcon />
+          </Link>
+        </div>
+        <ul className="self-center divide-y divide-ink/10 border-y border-ink/10">
+          {points.map((p) => (
+            <li key={p} className="flex items-center gap-3.5 py-4 text-[1.02rem] text-ink">
+              <CheckIcon className="shrink-0 text-olive" />
+              {p}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+/* -------------------------------------------------------------------- FAQ */
+function Faq() {
+  return (
+    <section id="faq" className="mx-auto max-w-6xl scroll-mt-16 px-4 py-24 sm:px-6 sm:py-32">
+      <div className="grid gap-10 lg:grid-cols-[1fr_1.6fr] lg:gap-16">
+        <div>
+          <p className="eyebrow text-muted">FAQ</p>
+          <h2 className="h-section mt-4 text-[clamp(1.9rem,4vw,2.75rem)]">
+            Questions riders ask.
+          </h2>
+          <p className="mt-5 text-muted">
+            Something else?{" "}
+            <Link href="/support" className="text-ink underline decoration-line-strong underline-offset-4 hover:decoration-ink">
+              Visit support
+            </Link>
+            .
+          </p>
+        </div>
+        <div className="border-t border-line">
+          {FAQ.map((f, i) => (
+            <details key={f.q} className="qa border-b border-line" open={i === 0}>
+              <summary className="flex items-start justify-between gap-6 py-5 text-[1.05rem] font-medium tracking-[-0.015em]">
+                <h3>{f.q}</h3>
+                <PlusIcon className="qa-icon mt-1 shrink-0 text-faint" />
+              </summary>
+              <p className="-mt-1 max-w-2xl pb-6 leading-relaxed text-muted">{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* --------------------------------------------------------------- Final CTA */
+function FinalCta() {
+  return (
+    <section id="download" className="scroll-mt-16 px-4 pb-24 sm:px-6 sm:pb-32">
+      <div className="on-night relative mx-auto max-w-6xl overflow-hidden rounded-3xl border border-line bg-night px-6 py-16 text-ink sm:px-14 sm:py-20">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-lime/[0.08] blur-3xl"
+        />
+        <div className="relative z-10 max-w-xl">
+          <h2 className="h-section text-[clamp(2rem,4.8vw,3.25rem)]">
+            Your next group ride, without the roadside phone calls.
+          </h2>
+          <p className="lede mt-5 text-lg leading-relaxed text-night-muted">
+            Download ConvoTrack, create a ride and send the link to your group.
+          </p>
+          <StoreButtons tone="night" className="mt-9" />
+        </div>
+        {/* eslint-disable-next-line @next/next/no-img-element -- decorative SVG */}
+        <img
+          src="/brand/mark.svg"
+          alt=""
+          aria-hidden
+          className="pointer-events-none absolute -bottom-24 -right-24 hidden w-[26rem] rotate-[-8deg] opacity-[0.07] md:block"
+        />
+      </div>
+    </section>
+  );
+}
+
+/* --------------------------------------------------------- Structured data */
+function StructuredData() {
+  const app = {
+    "@context": "https://schema.org",
+    "@type": "MobileApplication",
+    name: SITE_NAME,
+    alternateName: "ConvoTrack: Group Ride Tracker",
+    url: SITE_URL,
+    description: DESCRIPTION,
+    applicationCategory: "TravelApplication",
+    applicationSubCategory: "Group ride tracking",
+    operatingSystem: "iOS",
+    downloadUrl: APP_STORE_URL,
+    installUrl: APP_STORE_URL,
+    image: `${SITE_URL}/icon-512.png`,
+    screenshot: SHOWCASE.map((s) => `${SITE_URL}${s.src}`),
+    featureList: [
+      "Live group map with every rider's position",
+      "Turn-by-turn voice navigation",
+      "One-tap regroup to fuel, food or scenic stops",
+      "Emergency alerts to the whole group",
+      "Group split alerts",
+      "Invite by link, QR code or 6-character code",
+      "Rider roles: Ride Leader, Pace Keeper, Trail Guardian, Formation Rider",
+      "Ride summary with distance, duration, average speed and max group split",
+      "Shareable routes",
+    ],
+    offers: { "@type": "Offer", price: "0", priceCurrency: "INR" },
+    publisher: { "@id": `${SITE_URL}/#organization` },
+  };
+  const faq = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: FAQ.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  };
+  const video = {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    name: "ConvoTrack walkthrough: plan a group ride and start navigation",
+    description:
+      "A 20-second walkthrough of ConvoTrack: search a destination, compare routes, create a group ride and start turn-by-turn navigation.",
+    thumbnailUrl: `${SITE_URL}/video/walkthrough-poster.webp`,
+    contentUrl: `${SITE_URL}/video/walkthrough.mp4`,
+    uploadDate: "2026-11-02",
+    duration: "PT20S",
+  };
+  return (
+    <>
+      <JsonLd data={app} />
+      <JsonLd data={faq} />
+      <JsonLd data={video} />
+    </>
+  );
+}
+
+/* ------------------------------------------------------------------ Icons */
+const ic = {
+  width: 20,
+  height: 20,
+  viewBox: "0 0 24 24",
+  fill: "none",
+  stroke: "currentColor",
+  strokeWidth: 1.6,
+  strokeLinecap: "round" as const,
+  strokeLinejoin: "round" as const,
+  "aria-hidden": true,
+};
+function CheckIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg {...ic} width={18} height={18} strokeWidth={2} className={className}>
+      <path d="m5 12.5 4.2 4L19 7" />
     </svg>
   );
 }
-function IconRegroup() {
+function PlusIcon({ className = "" }: { className?: string }) {
   return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M12 3v4M12 17v4M3 12h4M17 12h4" />
-      <circle cx="12" cy="12" r="4" />
+    <svg {...ic} width={18} height={18} className={className}>
+      <path d="M12 5v14M5 12h14" />
     </svg>
   );
 }
-function IconAlert() {
+function ArrowIcon() {
   return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z" />
-      <path d="M12 9v4M12 17h.01" />
+    <svg {...ic} width={14} height={14} strokeWidth={2}>
+      <path d="M5 12h14M13 6l6 6-6 6" />
+    </svg>
+  );
+}
+function IconNav() {
+  return (
+    <svg {...ic}>
+      <path d="M3 11 21 3l-8 18-2-8-8-2Z" />
+    </svg>
+  );
+}
+function IconRoute() {
+  return (
+    <svg {...ic}>
+      <circle cx="6" cy="19" r="2" />
+      <circle cx="18" cy="5" r="2" />
+      <path d="M8 19h8.5a3.5 3.5 0 0 0 0-7h-9a3.5 3.5 0 0 1 0-7H16" />
+    </svg>
+  );
+}
+function IconUsers() {
+  return (
+    <svg {...ic}>
+      <circle cx="9" cy="8" r="3.2" />
+      <path d="M3 20c.6-3.4 3-5.2 6-5.2s5.4 1.8 6 5.2" />
+      <path d="M16 4.8a3.2 3.2 0 0 1 0 6.4M18 14.9c1.6.6 2.7 2.3 3 5.1" />
     </svg>
   );
 }
 function IconLink() {
   return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <svg {...ic}>
       <path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1.5 1.5" />
       <path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1.5-1.5" />
     </svg>
   );
 }
-function IconReport() {
+function IconCheck() {
   return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M4 20V10M10 20V4M16 20v-7M22 20H2" />
+    <svg {...ic}>
+      <rect x="3" y="3" width="18" height="18" rx="5" />
+      <path d="m8 12.3 2.8 2.7L16 9.5" />
     </svg>
   );
 }
-function IconApple() {
+function IconShare() {
   return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-      <path d="M16.4 12.9c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9s-1.8-.8-3-.8c-1.5 0-3 .9-3.8 2.3-1.6 2.8-.4 7 1.2 9.3.8 1.1 1.7 2.4 3 2.3 1.2 0 1.6-.8 3.1-.8s1.8.8 3 .7c1.3 0 2.1-1.1 2.8-2.3.9-1.3 1.3-2.6 1.3-2.7-.1 0-2.5-1-2.5-3.8ZM14.1 5.2c.7-.8 1.1-2 1-3.2-1 .1-2.2.7-2.9 1.5-.6.7-1.2 1.9-1 3 1.1.1 2.2-.5 2.9-1.3Z" />
-    </svg>
-  );
-}
-function IconPlay() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-      <path d="M22.018 13.298l-3.919 2.218-3.515-3.493 3.543-3.521 3.891 2.202a1.49 1.49 0 0 1 0 2.594zM1.337.924a1.486 1.486 0 0 0-.112.568v21.017c0 .217.045.419.124.6l11.155-11.087L1.337.924zm12.207 10.065l3.258-3.238L3.45.195a1.466 1.466 0 0 0-.946-.191l11.04 10.985zm0 2.067l-11 10.933c.298.036.612-.016.906-.183l13.324-7.54-3.23-3.21z" />
+    <svg {...ic}>
+      <path d="M12 3v12M7.5 7.5 12 3l4.5 4.5" />
+      <path d="M5 13v5a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3v-5" />
     </svg>
   );
 }

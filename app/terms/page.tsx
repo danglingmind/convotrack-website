@@ -4,6 +4,7 @@ import PageShell from "../components/PageShell";
 export const metadata: Metadata = {
   title: "Terms of Service",
   description: "The terms that govern your use of ConvoTrack.",
+  alternates: { canonical: "/terms" },
 };
 
 export default function Terms() {

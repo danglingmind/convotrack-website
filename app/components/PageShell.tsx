@@ -16,26 +16,17 @@ export default function PageShell({
     <>
       <Nav />
       <main className="flex-1">
-        <header className="relative overflow-hidden border-b border-outline-variant/40 pt-32 pb-16">
-          <div className="absolute inset-0 grid-lines opacity-50" />
-          <div className="relative mx-auto max-w-3xl px-5 sm:px-8">
-            <div className="inline-flex items-center gap-2">
-              <span className="h-px w-8 bg-lime" />
-              <span className="label-caps text-lime">{kicker}</span>
-            </div>
-            <h1 className="display mt-5 text-4xl text-on-surface sm:text-6xl">
-              {title}
-            </h1>
+        <header className="border-b border-line">
+          <div className="mx-auto max-w-3xl px-4 pb-14 pt-14 sm:px-6 sm:pt-20">
+            <p className="eyebrow text-muted">{kicker}</p>
+            <h1 className="h-display mt-4 text-[clamp(2.25rem,5.5vw,3.5rem)]">{title}</h1>
             {intro && (
-              <p className="mt-5 max-w-xl text-on-surface-variant leading-relaxed">
-                {intro}
-              </p>
+              <p className="lede mt-5 max-w-2xl text-lg leading-relaxed text-muted">{intro}</p>
             )}
           </div>
         </header>
-
-        <div className="mx-auto max-w-3xl px-5 py-16 sm:px-8">
-          <div className="prose-convo">{children}</div>
+        <div className="mx-auto max-w-3xl px-4 py-14 sm:px-6 sm:py-16">
+          <div className="prose-ct">{children}</div>
         </div>
       </main>
       <Footer />

@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: "Delete Your Account",
   description:
     "How to delete your ConvoTrack account and every piece of data attached to it, from inside the app or by email.",
+  alternates: { canonical: "/delete-account" },
 };
 
 // Google Play requires this page to be reachable without signing in, and to be linked

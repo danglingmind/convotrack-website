@@ -1,0 +1,34 @@
+# ConvoTrack
+
+> ConvoTrack is a group ride tracking app for iPhone (Android coming soon). It puts every rider in a group on one live map, gives everyone turn-by-turn voice navigation to the destination, lets any rider call a regroup or an emergency alert in one tap, and produces a ride summary at the end. It is built for motorcycle group rides, road trips and vehicle convoys.
+
+## Key facts
+
+- Platforms: iPhone, on the App Store (https://apps.apple.com/in/app/convotrack/id6788236830). Android is coming to Google Play.
+- Price: free to download. ConvoTrack Pro is an optional upgrade for bigger groups and full ride history.
+- Sign-in: Apple or Google. Riders join a ride with an invite link, a QR code or a 6-character code.
+- Privacy: location is shared only while a ride is live, only with riders in the same ride, and stops when the ride ends or the rider leaves. Location data is not sold or used for advertising.
+
+## Features
+
+- Live group map: every rider's position and distance, riders off screen pinned to the map edge, alerts when the group splits too far apart.
+- Turn-by-turn voice navigation for every rider.
+- Ride planner: destination search, route choice and stops.
+- Regroup: one tap to call a fuel, food or scenic stop, with a meet point for the whole group.
+- Emergency alerts: an urgent broadcast to the group with the rider's location.
+- Rider roles: Ride Leader, Pace Keeper, Trail Guardian, Formation Rider.
+- Lobby with a ready check before the ride starts.
+- Ride summary: total distance, duration, average speed, max group split and final order, shareable as a card.
+- Shareable routes that another group can ride.
+
+## Pages
+
+- [Home](https://convotrack.in/): product overview and FAQ
+- [Support](https://convotrack.in/support): help and frequently asked questions
+- [Privacy policy](https://convotrack.in/privacy)
+- [Terms of service](https://convotrack.in/terms)
+- [Delete your account](https://convotrack.in/delete-account)
+
+## Contact
+
+hello@convotrack.in

@@ -6,9 +6,14 @@ Deployed at **convotrack.in**. No auth, no database — every page is static and
 ## Stack
 
 - **Next.js 16** (App Router, Turbopack) + **React 19** + **TypeScript**
-- **Tailwind CSS v4** (theme tokens in `app/globals.css` mirror the iOS app palette)
-- **three.js** — animated hero route/convoy scene (`app/components/RouteScene.tsx`)
-- **GSAP + ScrollTrigger** — scroll reveals, count-ups, split headlines (`app/components/ScrollFX.tsx`)
+- **Tailwind CSS v4** (design tokens in `app/globals.css`: dark base matched to the product videos, the app's lime as a single accent)
+- No animation libraries: one CSS entrance on the hero; motion comes from the real product videos
+  in `public/video/` (encoded from `convoy/design/ride-walkthrough` and `convoy/design/app-store-header`),
+  played by `AutoVideo.tsx` only while on screen and never under reduced motion
+- SEO: `robots.ts`, `sitemap.ts`, `manifest.ts`, generated OG image, JSON-LD (Organization, WebSite,
+  MobileApplication, FAQPage) and `public/llms.txt` for AI assistants
+- Product facts live in `lib/site.ts`; FAQ copy in `lib/faq.ts` (shared by the page and its structured data).
+  Set `NEXT_PUBLIC_PLAY_LIVE=true` once the Play listing is public to turn on the Android button.
 
 ## Develop
 
@@ -31,10 +36,11 @@ app/
   components/
     Nav.tsx             Sticky nav + mobile drawer
     Footer.tsx          Site footer
-    RouteScene.tsx      three.js hero background (raw WebGL, no R3F)
-    ScrollFX.tsx        GSAP scroll controller
+    StoreButtons.tsx    App Store / Google Play buttons
+    Phone.tsx           Phone frame around real app screenshots (public/screens)
+    LinkFallback.tsx    Shared layout for /join and /route deep-link fallbacks
     PageShell.tsx       Shared shell for content pages
-public/brand/           Logo + app icon (copied from the iOS app assets)
+public/brand/mark.svg   Vector road mark (favicon source: app/icon.svg, app/favicon.ico)
 ```
 
 ## Theme
